@@ -1,12 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, sans-serif;
 }
 
 body {
-  background-color: #f4f4f4;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: #667085;
+  background-color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,11 +20,7 @@ body {
 
 .container {
   width: 100%;
-  max-width: 700px; /* ✅ Increased width for better spacing */
-  background: white;
   padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Quick Questions (2-column layout like mockup) */
@@ -45,11 +45,11 @@ body {
   background: #ddd;
 }
 
-/* Chat Box */
+/* Chat Box - Hide Scrollbar but Keep Scrolling */
 .chat-box {
-  height: 450px;
-  overflow-y: auto;
-  border: 1px solid #ccc;
+  height: 80vh;
+  max-width: 700px;
+  overflow-y: scroll; /* ✅ Enables scrolling */
   padding: 15px;
   margin-bottom: 15px;
   background: #fff;
@@ -57,7 +57,22 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  scroll-behavior: smooth; /* ✅ Enables smooth scrolling */
+  scroll-behavior: smooth; /* ✅ Enables smooth auto-scrolling */
+}
+
+/* Hide scrollbar for Chrome, Safari, and Edge */
+.chat-box::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.chat-box {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Internet Explorer and Edge */
+.chat-box {
+  -ms-overflow-style: none;
 }
 
 /* Chat Message Styles */
@@ -75,30 +90,11 @@ body {
 }
 
 .message p {
+  line-height: 1.5;
   max-width: 100%;
   padding: 12px;
   border-radius: 10px;
   font-size: 14px;
-}
-
-/* User Message */
-.user {
-  align-self: flex-end;
-}
-
-.user p {
-  background: #ffdddd;
-  color: red;
-}
-
-/* AI Message */
-.ai {
-  align-self: flex-start;
-}
-
-.ai p {
-  background: #ddffdd;
-  color: green;
 }
 
 /* Loading */
@@ -115,14 +111,14 @@ body {
 
 .input-form input {
   flex: 1;
-  padding: 12px; /* ✅ Increased input padding */
-  border: 1px solid #333;
+  padding: 15px; /* ✅ Increased input padding */
+  border: 1px solid #006732;
   border-radius: 5px;
   font-size: 14px;
 }
 
 .input-form button {
-  background: black;
+  background: #006732;
   color: white;
   border: none;
   padding: 12px 16px;
@@ -133,6 +129,31 @@ body {
 
 .input-form button:hover {
   background: gray;
+}
+
+.markdown ul {
+  padding-left: 20px;
+}
+
+.markdown li {
+  font-size: 0.9rem !important;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* Change the bullet point color */
+.markdown li::marker {
+  color: #006732;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+strong {
+  color: #006732 !important;
 }
 
 /* Responsive */
