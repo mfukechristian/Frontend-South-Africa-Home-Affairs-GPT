@@ -27,7 +27,7 @@ body {
   padding: 20px;
 }
 
-/* ✅ Centered Intro Section (Logo + Welcome + Quick Questions) */
+/* ✅ Centered Intro Section (Logo + Welcome) */
 .intro {
   display: flex;
   flex-direction: column;
@@ -56,24 +56,7 @@ h1 {
   color: #006732;
 }
 
-/* ✅ Quick Questions (Inside Intro & Centered) */
-.quick-questions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.quick-questions button {
-  padding: 10px;
-  background: white;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: 1rem;
-  text-align: center;
-  border: 1px solid #006732;
-}
-
-/* ✅ Hide Intro & Quick Questions When Chat Starts */
+/* ✅ Hide Intro When Chat Starts */
 .chat-active .intro {
   display: none;
 }
@@ -112,7 +95,7 @@ h1 {
   border-radius: 50%;
 }
 
-/* ✅ Fixed Input Form (No Borders) */
+/* ✅ Fixed Input Form (Fixed Width) */
 .input-form {
   display: flex;
   justify-content: center;
@@ -122,13 +105,11 @@ h1 {
 }
 
 .input-form input {
-  flex-grow: 1;
+  width: 500px; /* ✅ Fixed width */
   padding: 15px;
   border: 1px solid #006732;
   border-radius: 5px;
   font-size: 14px;
-  max-width: 500px;
-  min-width: 250px;
   outline: none;
 }
 
@@ -140,10 +121,6 @@ h1 {
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
-}
-
-.input-form button:hover {
-  background: gray;
 }
 
 /* ✅ Markdown Support */
@@ -183,11 +160,6 @@ strong {
     max-width: 90%;
   }
 
-  .quick-questions {
-    flex-direction: column;
-    align-items: center;
-  }
-
   .chat-box {
     height: 350px;
   }
@@ -199,10 +171,11 @@ strong {
 
   .input-form {
     flex-direction: column;
+    align-items: center;
   }
 
   .input-form input {
-    min-width: 100%;
+    width: 100%;
   }
 
   .input-form button {
