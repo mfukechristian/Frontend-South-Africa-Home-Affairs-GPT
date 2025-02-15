@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaPaperPlane } from "react-icons/fa";
+import ReactMarkdown from "react-markdown"; // ✅ Import Markdown support
 import userIcon from "./assets/react.svg"; // Make sure you have these images
 import aiIcon from "./assets/react.svg";
 
@@ -96,7 +97,12 @@ const App = () => {
               src={msg.sender === "user" ? userIcon : aiIcon}
               alt={msg.sender}
             />
-            <p>{msg.text}</p>
+            {/* ✅ Render AI responses as Markdown */}
+            {msg.sender === "ai" ? (
+              <ReactMarkdown className="markdown">{msg.text}</ReactMarkdown>
+            ) : (
+              <p>{msg.text}</p>
+            )}
           </div>
         ))}
         {loading && <p className="loading">AI is typing...</p>}
