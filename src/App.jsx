@@ -32,11 +32,14 @@ const App = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:3000/api/query", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query: input }),
-      });
+      const response = await fetch(
+        "https://home-affairs-gpt.onrender.com/api/query",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: input }),
+        }
+      );
 
       if (!response.body) throw new Error("No response body");
 
