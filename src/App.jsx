@@ -7,7 +7,7 @@ import logo from "./assets/logo.png"; // ✅ Add your logo here
 
 const App = () => {
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(""); // ✅ Ensure input state is properly set
   const [loading, setLoading] = useState(false);
   const [showIntro, setShowIntro] = useState(true); // ✅ Controls visibility of intro section
   const chatBoxRef = useRef(null);
@@ -80,34 +80,38 @@ const App = () => {
         </div>
       )}
 
-      <div className="chat-box" ref={chatBoxRef}>
-        {messages.map((msg, index) => (
-          <div key={index} className={`message ${msg.sender}`}>
-            <img
-              src={msg.sender === "user" ? userIcon : aiIcon}
-              alt={msg.sender}
-            />
-            {msg.sender === "ai" ? (
-              <ReactMarkdown className="markdown">{msg.text}</ReactMarkdown>
-            ) : (
-              <p>{msg.text}</p>
-            )}
-          </div>
-        ))}
-        {loading && <p className="loading">Loading...</p>}
-      </div>
-
+      {/* ✅ Ensure input is ALWAYS present */}
       <form onSubmit={handleSubmit} className="input-form">
         <input
           type="text"
-          placeholder="Ask anything..."
+          placeholder="eg: How can I apply for a tourist visa?..."
           value={input}
-          onChange={(e) => setInput(e.target.value)} // ✅ Fix input so users can type
+          onChange={(e) => setInput(e.target.value)}
         />
         <button type="submit">
           <FaPaperPlane />
         </button>
       </form>
+
+      {/* ✅ Chat box should not block input */}
+      {!showIntro && (
+        <div className="chat-box" ref={chatBoxRef}>
+          {messages.map((msg, index) => (
+            <div key={index} className={`message ${msg.sender}`}>
+              <img
+                src={msg.sender === "user" ? userIcon : aiIcon}
+                alt={msg.sender}
+              />
+              {msg.sender === "ai" ? (
+                <ReactMarkdown className="markdown">{msg.text}</ReactMarkdown>
+              ) : (
+                <p>{msg.text}</p>
+              )}
+            </div>
+          ))}
+          {loading && <div className="loading-dot"></div>}
+        </div>
+      )}
     </div>
   );
 };
