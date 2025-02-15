@@ -9,6 +9,8 @@
 body {
   font-family: "Roboto", sans-serif;
   font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: #667085;
   background-color: #fff;
   display: flex;
@@ -18,38 +20,69 @@ body {
   padding: 20px;
 }
 
+/* ✅ Container */
 .container {
   width: 100%;
+  max-width: 700px;
   padding: 20px;
 }
 
-/* Quick Questions (2-column layout like mockup) */
+/* ✅ Centered Intro Section (Logo + Welcome + Quick Questions) */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  height: 100vh; /* Full height */
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  gap: 15px;
+}
+
+/* ✅ Logo Styling */
+.logo {
+  width: 80px;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* ✅ Heading Styling */
+h1 {
+  font-size: 24px;
+  font-weight: bold;
+  color: #006732;
+}
+
+/* ✅ Quick Questions (Inside Intro & Centered) */
 .quick-questions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: center;
   gap: 10px;
-  margin-bottom: 15px;
 }
 
 .quick-questions button {
   padding: 10px;
-  border: 1px solid #333;
   background: white;
   cursor: pointer;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 1rem;
   text-align: center;
+  border: 1px solid #006732;
 }
 
-.quick-questions button:hover {
-  background: #ddd;
+/* ✅ Hide Intro & Quick Questions When Chat Starts */
+.chat-active .intro {
+  display: none;
 }
 
-/* Chat Box - Hide Scrollbar but Keep Scrolling */
+/* ✅ Chat Box (No Borders, Hidden Scrollbar) */
 .chat-box {
   height: 80vh;
   max-width: 700px;
-  overflow-y: scroll; /* ✅ Enables scrolling */
+  overflow-y: auto;
   padding: 15px;
   margin-bottom: 15px;
   background: #fff;
@@ -57,25 +90,15 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  scroll-behavior: smooth; /* ✅ Enables smooth auto-scrolling */
+  scroll-behavior: smooth;
 }
 
-/* Hide scrollbar for Chrome, Safari, and Edge */
+/* Hide scrollbar but keep scrolling */
 .chat-box::-webkit-scrollbar {
   display: none;
 }
 
-/* Hide scrollbar for Firefox */
-.chat-box {
-  scrollbar-width: none;
-}
-
-/* Hide scrollbar for Internet Explorer and Edge */
-.chat-box {
-  -ms-overflow-style: none;
-}
-
-/* Chat Message Styles */
+/* ✅ Chat Messages */
 .message {
   display: flex;
   align-items: flex-start;
@@ -84,37 +107,29 @@ body {
 }
 
 .message img {
-  width: 35px; /* ✅ Increased icon size */
+  width: 35px;
   height: 35px;
   border-radius: 50%;
 }
 
-.message p {
-  line-height: 1.5;
-  max-width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-/* Loading */
-.loading {
-  font-style: italic;
-  color: gray;
-}
-
-/* Input Form */
+/* ✅ Fixed Input Form (No Borders) */
 .input-form {
   display: flex;
+  justify-content: center;
   gap: 10px;
+  max-width: 700px;
+  width: 100%;
 }
 
 .input-form input {
-  flex: 1;
-  padding: 15px; /* ✅ Increased input padding */
+  flex-grow: 1;
+  padding: 15px;
   border: 1px solid #006732;
   border-radius: 5px;
   font-size: 14px;
+  max-width: 500px;
+  min-width: 250px;
+  outline: none;
 }
 
 .input-form button {
@@ -131,6 +146,7 @@ body {
   background: gray;
 }
 
+/* ✅ Markdown Support */
 .markdown ul {
   padding-left: 20px;
 }
@@ -138,10 +154,15 @@ body {
 .markdown li {
   font-size: 0.9rem !important;
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.9;
 }
 
-/* Change the bullet point color */
+.markdown p {
+  font-size: 0.9rem;
+  line-height: 1.9;
+}
+
+/* Change bullet point color */
 .markdown li::marker {
   color: #006732;
 }
@@ -156,22 +177,47 @@ strong {
   color: #006732 !important;
 }
 
-/* Responsive */
+/* ✅ Responsive Design */
 @media (max-width: 768px) {
   .container {
-    max-width: 90%; /* ✅ Adjusted for tablets */
+    max-width: 90%;
   }
 
   .quick-questions {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: center;
   }
 
   .chat-box {
-    height: 350px; /* ✅ Smaller height for smaller screens */
+    height: 350px;
   }
 
   .message img {
     width: 30px;
     height: 30px;
+  }
+
+  .input-form {
+    flex-direction: column;
+  }
+
+  .input-form input {
+    min-width: 100%;
+  }
+
+  .input-form button {
+    width: 100%;
+  }
+}
+
+/* ✅ Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

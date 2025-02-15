@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaPaperPlane } from "react-icons/fa";
-import ReactMarkdown from "react-markdown"; // ✅ Import Markdown support
-import userIcon from "./assets/react.svg"; // Make sure you have these images
-import aiIcon from "./assets/react.svg";
+import ReactMarkdown from "react-markdown";
+import userIcon from "./assets/user.png";
+import aiIcon from "./assets/logo.png";
+import logo from "./assets/logo.png"; // ✅ Add your logo here
 
 const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showDemoQuestions, setShowDemoQuestions] = useState(true);
-  const chatBoxRef = useRef(null); // ✅ Ref for auto-scrolling
+  const [showIntro, setShowIntro] = useState(true); // ✅ Controls visibility of intro section
+  const chatBoxRef = useRef(null);
 
   const quickQuestions = [
     "How to apply for a work permit in South Africa?",
@@ -23,14 +24,19 @@ const App = () => {
     }
   }, [messages]);
 
+  const handleQuickQuestion = (question) => {
+    setInput(question);
+    handleSubmit({ preventDefault: () => {} }); // ✅ Trigger chat
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim()) return;
 
-    setShowDemoQuestions(false); // Hide demo questions after first message
+    setShowIntro(false); // ✅ Hide intro and quick questions when chat starts
 
     const userMessage = { sender: "user", text: input };
-    setMessages((prevMessages) => [...prevMessages, userMessage]); // ✅ Keep previous messages
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
 
     setInput("");
     setLoading(true);
@@ -45,8 +51,6 @@ const App = () => {
       if (!response.body) throw new Error("No response body");
 
       let botMessage = { sender: "ai", text: "" };
-
-      // ✅ Add empty AI message first (so it doesn’t break UI)
       setMessages((prevMessages) => [...prevMessages, botMessage]);
 
       const reader = response.body.getReader();
@@ -58,12 +62,11 @@ const App = () => {
 
         botMessage.text += decoder.decode(value, { stream: true });
 
-        // ✅ Correctly update the last AI message without overwriting past messages
-        setMessages((prevMessages) => {
-          return prevMessages.map((msg, index) =>
+        setMessages((prevMessages) =>
+          prevMessages.map((msg, index) =>
             index === prevMessages.length - 1 ? { ...botMessage } : msg
-          );
-        });
+          )
+        );
       }
     } catch (error) {
       console.error("Error:", error);
@@ -77,27 +80,30 @@ const App = () => {
   };
 
   return (
-    <div className="container">
-      {showDemoQuestions && (
-        <div className="quick-questions">
-          {quickQuestions.map((q, index) => (
-            <button key={index} onClick={() => setInput(q)}>
-              {q}
-            </button>
-          ))}
+    <div className={`container ${!showIntro ? "chat-active" : ""}`}>
+      {/* ✅ Centered Welcome Message & Quick Questions (Hidden on Chat Start) */}
+      {showIntro && (
+        <div className="intro">
+          <img src={logo} alt="App Logo" className="logo" />
+          <h1>South African Visa Advisor</h1>
+          <p>Ask me anything about South African visas and immigration.</p>
+          <div className="quick-questions">
+            {quickQuestions.map((q, index) => (
+              <button key={index} onClick={() => handleQuickQuestion(q)}>
+                {q}
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
       <div className="chat-box" ref={chatBoxRef}>
-        {" "}
-        {/* ✅ Attach ref here */}
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>
             <img
               src={msg.sender === "user" ? userIcon : aiIcon}
               alt={msg.sender}
             />
-            {/* ✅ Render AI responses as Markdown */}
             {msg.sender === "ai" ? (
               <ReactMarkdown className="markdown">{msg.text}</ReactMarkdown>
             ) : (
@@ -105,7 +111,7 @@ const App = () => {
             )}
           </div>
         ))}
-        {loading && <p className="loading">AI is typing...</p>}
+        {loading && <p className="loading">Loading...</p>}
       </div>
 
       <form onSubmit={handleSubmit} className="input-form">
